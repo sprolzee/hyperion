@@ -55,9 +55,27 @@ export default function Home() {
     { name: 'neptune', mass: 17.1, radius: 3.6, orbitRadius: 620, orbitTime: 150 }
   ]
 
-  // Shared function to calculate planet positions
+  // Create 100 equally spaced axes around the sun (like clock positions)
+  const createAxisPositions = () => {
+    const axes = []
+    for (let i = 0; i < 100; i++) {
+      const angle = (i / 100) * 360 // 0 to 360 degrees
+      const radians = (angle - 90) * Math.PI / 180 // Convert to radians, offset by -90 to start at top
+      axes.push({ angle, radians })
+    }
+    return axes
+  }
+
+  const axisPositions = createAxisPositions()
+
+  // Shared function to calculate planet positions with random axis assignment
   const getPlanetPosition = (planet: any, elapsed: number) => {
-    const planetAngle = (elapsed / planet.orbitTime) * 360
+    // Use planet name as seed for consistent axis assignment per planet
+    const planetIndex = planets.findIndex(p => p.name === planet.name)
+    const axisIndex = planetIndex % 100 // Each planet gets a different axis
+    const axis = axisPositions[axisIndex]
+    
+    const planetAngle = (elapsed / planet.orbitTime) * 360 + axis.angle
     const planetX = Math.cos((planetAngle - 90) * Math.PI / 180) * planet.orbitRadius
     const planetY = Math.sin((planetAngle - 90) * Math.PI / 180) * planet.orbitRadius
     return { x: planetX, y: planetY }
