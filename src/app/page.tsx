@@ -43,16 +43,16 @@ export default function Home() {
   const audioRef = useRef<HTMLAudioElement>(null)
   const rocketIdRef = useRef(0)
 
-  // Planet data with gravitational strength and collision radius (further reduced for better visibility)
+  // Planet data with gravitational strength and collision radius (increased spacing by 10%)
   const planets = [
-    { name: 'mercury', mass: 0.055, radius: 1.8, orbitRadius: 60, orbitTime: 8 },
-    { name: 'venus', mass: 0.815, radius: 2.7, orbitRadius: 100, orbitTime: 12 },
-    { name: 'earth', mass: 1.0, radius: 3.6, orbitRadius: 140, orbitTime: 20 },
-    { name: 'mars', mass: 0.107, radius: 2.7, orbitRadius: 180, orbitTime: 30 },
-    { name: 'jupiter', mass: 317.8, radius: 5.4, orbitRadius: 220, orbitTime: 60 },
-    { name: 'saturn', mass: 95.2, radius: 4.5, orbitRadius: 260, orbitTime: 90 },
-    { name: 'uranus', mass: 14.5, radius: 3.6, orbitRadius: 300, orbitTime: 120 },
-    { name: 'neptune', mass: 17.1, radius: 3.6, orbitRadius: 340, orbitTime: 150 }
+    { name: 'mercury', mass: 0.055, radius: 1.8, orbitRadius: 66, orbitTime: 8 },
+    { name: 'venus', mass: 0.815, radius: 2.7, orbitRadius: 110, orbitTime: 12 },
+    { name: 'earth', mass: 1.0, radius: 3.6, orbitRadius: 154, orbitTime: 20 },
+    { name: 'mars', mass: 0.107, radius: 2.7, orbitRadius: 198, orbitTime: 30 },
+    { name: 'jupiter', mass: 317.8, radius: 5.4, orbitRadius: 242, orbitTime: 60 },
+    { name: 'saturn', mass: 95.2, radius: 4.5, orbitRadius: 286, orbitTime: 90 },
+    { name: 'uranus', mass: 14.5, radius: 3.6, orbitRadius: 330, orbitTime: 120 },
+    { name: 'neptune', mass: 17.1, radius: 3.6, orbitRadius: 374, orbitTime: 150 }
   ]
 
   // Shared function to calculate planet positions
@@ -165,8 +165,8 @@ export default function Home() {
           const dy = planetY - prev.y
           const distance = Math.sqrt(dx * dx + dy * dy)
           
-          // Gravitational influence radius = much larger for better interaction
-          const gravitationalRadius = planet.radius * 50 // Increased from 20 to 50 for much larger fields
+          // Gravitational influence radius = reduced by 40% for cleaner appearance
+          const gravitationalRadius = planet.radius * 30 // Reduced from 50 to 30 (40% smaller)
           
           // Debug: Log all planet positions and distances
           console.log(`PLANET ${planet.name}: x=${planetX.toFixed(1)}, y=${planetY.toFixed(1)}, distance=${distance.toFixed(1)}, radius=${gravitationalRadius.toFixed(1)}`)
@@ -527,7 +527,7 @@ export default function Home() {
 
         {/* JavaScript-Positioned Gravitational Circles (aligned with physics) */}
         {getParticleTimePlanetPositions().map((planet, index) => {
-          const gravitationalRadius = planet.radius * 50 // Same as physics calculation
+          const gravitationalRadius = planet.radius * 30 // Same as physics calculation (reduced by 40%)
           return (
             <div
               key={`grav-${planet.name}`}
