@@ -43,16 +43,16 @@ export default function Home() {
   const audioRef = useRef<HTMLAudioElement>(null)
   const rocketIdRef = useRef(0)
 
-  // Planet data with gravitational strength and collision radius
+  // Planet data with gravitational strength and collision radius (further reduced for better visibility)
   const planets = [
-    { name: 'mercury', mass: 0.055, radius: 1.8, orbitRadius: 150, orbitTime: 8 },
-    { name: 'venus', mass: 0.815, radius: 2.7, orbitRadius: 280, orbitTime: 12 },
-    { name: 'earth', mass: 1.0, radius: 3.6, orbitRadius: 410, orbitTime: 20 },
-    { name: 'mars', mass: 0.107, radius: 2.7, orbitRadius: 540, orbitTime: 30 },
-    { name: 'jupiter', mass: 317.8, radius: 5.4, orbitRadius: 680, orbitTime: 60 },
-    { name: 'saturn', mass: 95.2, radius: 4.5, orbitRadius: 820, orbitTime: 90 },
-    { name: 'uranus', mass: 14.5, radius: 3.6, orbitRadius: 960, orbitTime: 120 },
-    { name: 'neptune', mass: 17.1, radius: 3.6, orbitRadius: 1100, orbitTime: 150 }
+    { name: 'mercury', mass: 0.055, radius: 1.8, orbitRadius: 60, orbitTime: 8 },
+    { name: 'venus', mass: 0.815, radius: 2.7, orbitRadius: 100, orbitTime: 12 },
+    { name: 'earth', mass: 1.0, radius: 3.6, orbitRadius: 140, orbitTime: 20 },
+    { name: 'mars', mass: 0.107, radius: 2.7, orbitRadius: 180, orbitTime: 30 },
+    { name: 'jupiter', mass: 317.8, radius: 5.4, orbitRadius: 220, orbitTime: 60 },
+    { name: 'saturn', mass: 95.2, radius: 4.5, orbitRadius: 260, orbitTime: 90 },
+    { name: 'uranus', mass: 14.5, radius: 3.6, orbitRadius: 300, orbitTime: 120 },
+    { name: 'neptune', mass: 17.1, radius: 3.6, orbitRadius: 340, orbitTime: 150 }
   ]
 
   // Shared function to calculate planet positions
