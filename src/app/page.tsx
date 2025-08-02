@@ -104,10 +104,20 @@ export default function Home() {
     // Initialize test particle
     initializeTestParticle()
     
-    // Relaunch particle every 60 seconds for better visibility
+    // Relaunch particle every 60 seconds for better visibility (but keep same start time)
     const relaunchInterval = setInterval(() => {
       console.log('RELAUNCHING PARTICLE FROM SUN')
-      initializeTestParticle()
+      setTestParticle(prev => {
+        const randomAngle = Math.random() * 2 * Math.PI
+        const slowVelocity = 2.0
+        return {
+          x: Math.cos(randomAngle) * 50,
+          y: Math.sin(randomAngle) * 50,
+          velocityX: Math.cos(randomAngle) * slowVelocity,
+          velocityY: Math.sin(randomAngle) * slowVelocity,
+          startTime: prev.startTime // Keep the same start time to avoid animation restart
+        }
+      })
     }, 60000) // 60 seconds
     
     // Simulate physics for test particle
@@ -208,7 +218,7 @@ export default function Home() {
             y: Math.sin(randomAngle) * 50,
             velocityX: Math.cos(randomAngle) * 2.0,
             velocityY: Math.sin(randomAngle) * 2.0,
-            startTime: Date.now()
+            startTime: prev.startTime // Keep the same start time to avoid animation restart
           }
         }
         
@@ -551,7 +561,7 @@ export default function Home() {
 
         {/* JavaScript-Positioned Planets (aligned with physics) */}
         {getParticleTimePlanetPositions().map((planet, index) => {
-          const planetSize = planet.radius * 2
+          const planetSize = planet.radius * 2 * 5 // 5x larger planets
           let planetVisual
           
           switch(planet.name) {
