@@ -176,9 +176,9 @@ export default function Home() {
             console.log(`🎯 PARTICLE IN ${planet.name.toUpperCase()} GRAVITY RANGE!`)
           }
           
-          // Only apply gravity if within gravitational influence radius
-          if (distance <= gravitationalRadius && distance > 0) {
-            const force = (planet.mass * 500.0) / (distance * distance) // 10x stronger gravity (50.0 -> 500.0)
+                      // Only apply gravity if within gravitational influence radius
+            if (distance <= gravitationalRadius && distance > 0) {
+              const force = (planet.mass * 300.0) / (distance * distance) // Reduced by 40% (500.0 -> 300.0)
             const forceX = (dx / distance) * force
             const forceY = (dy / distance) * force
             totalForceX += forceX
