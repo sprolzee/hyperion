@@ -19,6 +19,24 @@ export default function Home() {
       position: getPlanetPosition(planet, elapsed)
     }))
   }
+  
+  // Calculate planet positions using current time (for gravitational circles)
+  const getCurrentTimePlanetPositions = () => {
+    const currentTime = Date.now() / 1000
+    return planets.map(planet => ({
+      ...planet,
+      position: getPlanetPosition(planet, currentTime)
+    }))
+  }
+  
+  // Calculate planet positions using the same time as particle physics
+  const getParticleTimePlanetPositions = () => {
+    const elapsed = (Date.now() - testParticle.startTime) / 1000
+    return planets.map(planet => ({
+      ...planet,
+      position: getPlanetPosition(planet, elapsed)
+    }))
+  }
   const audioRef = useRef<HTMLAudioElement>(null)
   const rocketIdRef = useRef(0)
 
@@ -489,8 +507,10 @@ export default function Home() {
           </div>
         </div>
 
+
+
         {/* JavaScript-Positioned Gravitational Circles (aligned with physics) */}
-        {getCurrentPlanetPositions().map((planet, index) => {
+        {getParticleTimePlanetPositions().map((planet, index) => {
           const gravitationalRadius = planet.radius * 50 // Same as physics calculation
           return (
             <div
@@ -507,7 +527,6 @@ export default function Home() {
             />
           )
         })}
-
 
         {/* Sun */}
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
@@ -530,248 +549,100 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Mercury - Invisible Anchor Point */}
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-          <div 
-            className="absolute"
-            style={{
-              animation: 'mercuryOrbit 8s linear infinite',
-              transformOrigin: 'center',
-              transform: 'rotate(0deg) translateX(100px) rotate(0deg)'
-            }}
-          >
-            {/* Planet Visual */}
-            <div className="relative w-8 h-8" style={{ transform: `rotateX(${-rotation.x}deg) rotateY(${-rotation.y}deg)` }}>
-              <div className="w-8 h-8 bg-gradient-to-br from-gray-600 via-gray-500 to-gray-400 rounded-full"></div>
-              <div className="absolute inset-0 w-8 h-8 bg-gradient-to-br from-gray-700 via-gray-600 to-gray-500 rounded-full opacity-40"></div>
-            </div>
-            {/* Gravitational Circle - HIDDEN (replaced by JavaScript positioning) */}
-            {/* <div 
-              className="absolute border-2 border-red-500/50 rounded-full pointer-events-none"
+        {/* JavaScript-Positioned Planets (aligned with physics) */}
+        {getParticleTimePlanetPositions().map((planet, index) => {
+          const planetSize = planet.radius * 2
+          let planetVisual
+          
+          switch(planet.name) {
+            case 'mercury':
+              planetVisual = (
+                <div className="relative" style={{ width: `${planetSize}px`, height: `${planetSize}px` }}>
+                  <div className={`w-full h-full bg-gradient-to-br from-gray-600 via-gray-500 to-gray-400 rounded-full`}></div>
+                  <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-gray-700 via-gray-600 to-gray-500 rounded-full opacity-40"></div>
+                </div>
+              )
+              break
+            case 'venus':
+              planetVisual = (
+                <div className="relative" style={{ width: `${planetSize}px`, height: `${planetSize}px` }}>
+                  <div className={`w-full h-full bg-gradient-to-br from-yellow-400 via-orange-300 to-yellow-500 rounded-full`}></div>
+                  <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-yellow-500 via-orange-400 to-yellow-600 rounded-full opacity-40"></div>
+                </div>
+              )
+              break
+            case 'earth':
+              planetVisual = (
+                <div className="relative" style={{ width: `${planetSize}px`, height: `${planetSize}px` }}>
+                  <div className={`w-full h-full bg-gradient-to-br from-blue-500 via-blue-400 to-green-500 rounded-full`}></div>
+                  <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-green-600 via-green-500 to-green-400 rounded-full opacity-40"></div>
+                  <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-white/30 via-white/20 to-transparent rounded-full opacity-60"></div>
+                  <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-blue-300/20 via-blue-200/10 to-transparent rounded-full opacity-40"></div>
+                </div>
+              )
+              break
+            case 'mars':
+              planetVisual = (
+                <div className="relative" style={{ width: `${planetSize}px`, height: `${planetSize}px` }}>
+                  <div className={`w-full h-full bg-gradient-to-br from-red-600 via-red-500 to-orange-500 rounded-full`}></div>
+                  <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-red-700 via-red-600 to-red-500 rounded-full opacity-40"></div>
+                </div>
+              )
+              break
+            case 'jupiter':
+              planetVisual = (
+                <div className="relative" style={{ width: `${planetSize}px`, height: `${planetSize}px` }}>
+                  <div className={`w-full h-full bg-gradient-to-br from-yellow-600 via-orange-500 to-red-600 rounded-full`}></div>
+                  <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-orange-600 via-yellow-500 to-orange-400 rounded-full opacity-30"></div>
+                  <div className="absolute inset-2 w-4/5 h-4/5 bg-gradient-to-br from-orange-500 via-yellow-400 to-orange-500 rounded-full opacity-40"></div>
+                </div>
+              )
+              break
+            case 'saturn':
+              planetVisual = (
+                <div className="relative" style={{ width: `${planetSize}px`, height: `${planetSize}px` }}>
+                  <div className={`w-full h-full bg-gradient-to-br from-yellow-300 via-orange-300 to-yellow-400 rounded-full`}></div>
+                  <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-yellow-200 via-orange-200 to-yellow-300 rounded-full opacity-60"></div>
+                </div>
+              )
+              break
+            case 'uranus':
+              planetVisual = (
+                <div className="relative" style={{ width: `${planetSize}px`, height: `${planetSize}px` }}>
+                  <div className={`w-full h-full bg-gradient-to-br from-cyan-400 via-blue-300 to-cyan-500 rounded-full`}></div>
+                  <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-cyan-500 via-blue-400 to-cyan-600 rounded-full opacity-40"></div>
+                </div>
+              )
+              break
+            case 'neptune':
+              planetVisual = (
+                <div className="relative" style={{ width: `${planetSize}px`, height: `${planetSize}px` }}>
+                  <div className={`w-full h-full bg-gradient-to-br from-blue-600 via-blue-500 to-indigo-600 rounded-full`}></div>
+                  <div className="absolute inset-0 w-full h-full bg-gradient-to-br from-blue-700 via-blue-600 to-indigo-700 rounded-full opacity-40"></div>
+                </div>
+              )
+              break
+            default:
+              planetVisual = <div className="w-4 h-4 bg-gray-500 rounded-full"></div>
+          }
+          
+          return (
+            <div
+              key={`planet-${planet.name}`}
+              className="absolute"
               style={{
-                width: '72px',
-                height: '72px',
+                left: `calc(50% + ${planet.position.x}px)`,
+                top: `calc(50% + ${planet.position.y}px)`,
                 transform: 'translate(-50%, -50%)',
-                top: '50%',
-                left: '50%',
-                zIndex: 500
+                zIndex: planet.name === 'saturn' ? 600 : 500
               }}
-            /> */}
-          </div>
-        </div>
+            >
+              {planetVisual}
+            </div>
+          )
+        })}
 
-        {/* Venus - Invisible Anchor Point */}
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-          <div 
-            className="absolute"
-            style={{
-              animation: 'venusOrbit 12s linear infinite',
-              transformOrigin: 'center',
-              transform: 'rotate(0deg) translateX(180px) rotate(0deg)'
-            }}
-          >
-            {/* Planet Visual */}
-            <div className="relative w-10 h-10" style={{ transform: `rotateX(${-rotation.x}deg) rotateY(${-rotation.y}deg)` }}>
-              <div className="w-10 h-10 bg-gradient-to-br from-yellow-400 via-orange-300 to-yellow-500 rounded-full"></div>
-              <div className="absolute inset-0 w-10 h-10 bg-gradient-to-br from-yellow-500 via-orange-400 to-yellow-600 rounded-full opacity-40"></div>
-            </div>
-            {/* Gravitational Circle - HIDDEN (replaced by JavaScript positioning) */}
-            {/* <div 
-              className="absolute border-2 border-red-500/50 rounded-full pointer-events-none"
-              style={{
-                width: '108px',
-                height: '108px',
-                transform: 'translate(-50%, -50%)',
-                top: '50%',
-                left: '50%',
-                zIndex: 500
-              }}
-            /> */}
-          </div>
-        </div>
 
-        {/* Earth - Invisible Anchor Point */}
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-          <div 
-            className="absolute"
-            style={{
-              animation: 'earthOrbit 20s linear infinite',
-              transformOrigin: 'center',
-              transform: 'rotate(0deg) translateX(260px) rotate(0deg)'
-            }}
-          >
-            {/* Planet Visual */}
-            <div className="relative w-12 h-12" style={{ transform: `rotateX(${-rotation.x}deg) rotateY(${-rotation.y}deg)` }}>
-              <div className="w-12 h-12 bg-gradient-to-br from-blue-500 via-blue-400 to-green-500 rounded-full"></div>
-              <div className="absolute inset-0 w-12 h-12 bg-gradient-to-br from-green-600 via-green-500 to-green-400 rounded-full opacity-40"></div>
-              <div className="absolute inset-0 w-12 h-12 bg-gradient-to-br from-white/30 via-white/20 to-transparent rounded-full opacity-60"></div>
-              <div className="absolute inset-0 w-12 h-12 bg-gradient-to-br from-blue-300/20 via-blue-200/10 to-transparent rounded-full opacity-40"></div>
-            </div>
-            {/* Gravitational Circle - HIDDEN (replaced by JavaScript positioning) */}
-            {/* <div 
-              className="absolute border-2 border-red-500/50 rounded-full pointer-events-none"
-              style={{
-                width: '144px',
-                height: '144px',
-                transform: 'translate(-50%, -50%)',
-                top: '50%',
-                left: '50%',
-                zIndex: 500
-              }}
-            /> */}
-          </div>
-        </div>
-
-        {/* Mars - Invisible Anchor Point */}
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-          <div 
-            className="absolute"
-            style={{
-              animation: 'marsOrbit 30s linear infinite',
-              transformOrigin: 'center',
-              transform: 'rotate(0deg) translateX(340px) rotate(0deg)'
-            }}
-          >
-            {/* Planet Visual */}
-            <div className="relative w-10 h-10" style={{ transform: `rotateX(${-rotation.x}deg) rotateY(${-rotation.y}deg)` }}>
-              <div className="w-10 h-10 bg-gradient-to-br from-red-600 via-red-500 to-orange-500 rounded-full"></div>
-              <div className="absolute inset-0 w-10 h-10 bg-gradient-to-br from-red-700 via-red-600 to-red-500 rounded-full opacity-40"></div>
-            </div>
-            {/* Gravitational Circle - HIDDEN (replaced by JavaScript positioning) */}
-            {/* <div 
-              className="absolute border-2 border-red-500/50 rounded-full pointer-events-none"
-              style={{
-                width: '108px',
-                height: '108px',
-                transform: 'translate(-50%, -50%)',
-                top: '50%',
-                left: '50%',
-                zIndex: 500
-              }}
-            /> */}
-          </div>
-        </div>
-
-        {/* Jupiter - Invisible Anchor Point */}
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-          <div 
-            className="absolute"
-            style={{
-              animation: 'jupiterOrbit 60s linear infinite',
-              transformOrigin: 'center',
-              transform: 'rotate(0deg) translateX(680px) rotate(0deg)'
-            }}
-          >
-            {/* Planet Visual */}
-            <div className="relative w-20 h-20" style={{ transform: `rotateX(${-rotation.x}deg) rotateY(${-rotation.y}deg)` }}>
-              <div className="w-20 h-20 bg-gradient-to-br from-yellow-600 via-orange-500 to-red-600 rounded-full"></div>
-              <div className="absolute inset-0 w-20 h-20 bg-gradient-to-br from-orange-600 via-yellow-500 to-orange-400 rounded-full opacity-30"></div>
-              <div className="absolute inset-2 w-16 h-16 bg-gradient-to-br from-orange-500 via-yellow-400 to-orange-500 rounded-full opacity-40"></div>
-            </div>
-            {/* Gravitational Circle - HIDDEN (replaced by JavaScript positioning) */}
-            {/* <div 
-              className="absolute border-2 border-red-500/50 rounded-full pointer-events-none"
-              style={{
-                width: '216px',
-                height: '216px',
-                transform: 'translate(-50%, -50%)',
-                top: '50%',
-                left: '50%',
-                zIndex: 500
-              }}
-            /> */}
-          </div>
-        </div>
-
-        {/* Saturn - Invisible Anchor Point */}
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-          <div 
-            className="absolute"
-            style={{
-              animation: 'saturnOrbit 90s linear infinite',
-              transformOrigin: 'center',
-              transform: 'rotate(0deg) translateX(820px) rotate(0deg)'
-            }}
-          >
-            {/* Planet Visual */}
-            <div className="relative w-20 h-20" style={{ transform: `rotateX(${-rotation.x}deg) rotateY(${-rotation.y}deg)`, zIndex: 600 }}>
-              <div className="w-20 h-20 bg-gradient-to-br from-yellow-300 via-orange-300 to-yellow-400 rounded-full"></div>
-              <div className="absolute inset-0 w-20 h-20 bg-gradient-to-br from-yellow-200 via-orange-200 to-yellow-300 rounded-full opacity-60"></div>
-            </div>
-            {/* Gravitational Circle - HIDDEN (replaced by JavaScript positioning) */}
-            {/* <div 
-              className="absolute border-2 border-red-500/50 rounded-full pointer-events-none"
-              style={{
-                width: '180px',
-                height: '180px',
-                transform: 'translate(-50%, -50%)',
-                top: '50%',
-                left: '50%',
-                zIndex: 600
-              }}
-            /> */}
-          </div>
-        </div>
-
-        {/* Uranus - Invisible Anchor Point */}
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-          <div 
-            className="absolute"
-            style={{
-              animation: 'uranusOrbit 120s linear infinite',
-              transformOrigin: 'center',
-              transform: 'rotate(0deg) translateX(960px) rotate(0deg)'
-            }}
-          >
-            {/* Planet Visual */}
-            <div className="relative w-14 h-14" style={{ transform: `rotateX(${-rotation.x}deg) rotateY(${-rotation.y}deg)` }}>
-              <div className="w-14 h-14 bg-gradient-to-br from-cyan-400 via-blue-300 to-cyan-500 rounded-full"></div>
-              <div className="absolute inset-0 w-14 h-14 bg-gradient-to-br from-cyan-500 via-blue-400 to-cyan-600 rounded-full opacity-40"></div>
-            </div>
-            {/* Gravitational Circle - HIDDEN (replaced by JavaScript positioning) */}
-            {/* <div 
-              className="absolute border-2 border-red-500/50 rounded-full pointer-events-none"
-              style={{
-                width: '144px',
-                height: '144px',
-                transform: 'translate(-50%, -50%)',
-                top: '50%',
-                left: '50%',
-                zIndex: 500
-              }}
-            /> */}
-          </div>
-        </div>
-
-        {/* Neptune - Invisible Anchor Point */}
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-          <div 
-            className="absolute"
-            style={{
-              animation: 'neptuneOrbit 150s linear infinite',
-              transformOrigin: 'center',
-              transform: 'rotate(0deg) translateX(1100px) rotate(0deg)'
-            }}
-          >
-            {/* Planet Visual */}
-            <div className="relative w-14 h-14" style={{ transform: `rotateX(${-rotation.x}deg) rotateY(${-rotation.y}deg)` }}>
-              <div className="w-14 h-14 bg-gradient-to-br from-blue-600 via-blue-500 to-indigo-600 rounded-full"></div>
-              <div className="absolute inset-0 w-14 h-14 bg-gradient-to-br from-blue-700 via-blue-600 to-indigo-700 rounded-full opacity-40"></div>
-            </div>
-            {/* Gravitational Circle - HIDDEN (replaced by JavaScript positioning) */}
-            {/* <div 
-              className="absolute border-2 border-red-500/50 rounded-full pointer-events-none"
-              style={{
-                width: '144px',
-                height: '144px',
-                transform: 'translate(-50%, -50%)',
-                top: '50%',
-                left: '50%',
-                zIndex: 500
-              }}
-            /> */}
-          </div>
-        </div>
 
         {/* Orbital paths */}
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
