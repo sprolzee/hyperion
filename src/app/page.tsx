@@ -30,8 +30,11 @@ export default function Home() {
   }
   
   // Calculate planet positions using the same time as particle physics
+  // Fixed start time for planet animations that never changes
+  const planetAnimationStartTime = useRef(Date.now())
+  
   const getParticleTimePlanetPositions = () => {
-    const elapsed = (Date.now() - testParticle.startTime) / 1000
+    const elapsed = (Date.now() - planetAnimationStartTime.current) / 1000
     return planets.map(planet => ({
       ...planet,
       position: getPlanetPosition(planet, elapsed)
@@ -152,8 +155,9 @@ export default function Home() {
         }
         
         planets.forEach(planet => {
-          // Calculate planet position using shared function
-          const planetPos = getPlanetPosition(planet, elapsed)
+          // Calculate planet position using planet animation time (not particle time)
+          const planetElapsed = (Date.now() - planetAnimationStartTime.current) / 1000
+          const planetPos = getPlanetPosition(planet, planetElapsed)
           const planetX = planetPos.x
           const planetY = planetPos.y
           
@@ -195,7 +199,9 @@ export default function Home() {
         let collisionDetected = false
         let collisionPlanet = ''
         planets.forEach(planet => {
-          const planetPos = getPlanetPosition(planet, elapsed)
+          // Calculate planet position using planet animation time (not particle time)
+          const planetElapsed = (Date.now() - planetAnimationStartTime.current) / 1000
+          const planetPos = getPlanetPosition(planet, planetElapsed)
           const planetX = planetPos.x
           const planetY = planetPos.y
           const dx = planetX - prev.x
