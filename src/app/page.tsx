@@ -68,11 +68,19 @@ export default function Home() {
 
   const axisPositions = createAxisPositions()
 
+  // Generate random axis assignments for each planet on page load
+  const [planetAxisAssignments] = useState(() => {
+    const assignments: { [key: string]: number } = {}
+    planets.forEach(planet => {
+      assignments[planet.name] = Math.floor(Math.random() * 100) // Random axis 0-99
+    })
+    return assignments
+  })
+
   // Shared function to calculate planet positions with random axis assignment
   const getPlanetPosition = (planet: any, elapsed: number) => {
-    // Use planet name as seed for consistent axis assignment per planet
-    const planetIndex = planets.findIndex(p => p.name === planet.name)
-    const axisIndex = planetIndex % 100 // Each planet gets a different axis
+    // Use random axis assignment for this planet
+    const axisIndex = planetAxisAssignments[planet.name]
     const axis = axisPositions[axisIndex]
     
     const planetAngle = (elapsed / planet.orbitTime) * 360 + axis.angle
