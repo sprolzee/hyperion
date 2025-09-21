@@ -117,24 +117,159 @@ export default function ThreeDPrintingPage() {
           </p>
         </div>
 
+        {/* Action Button */}
+        <div className="flex justify-center mb-12">
+          <Link 
+            href="/3d-printing/start-print"
+            className="bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-500 hover:to-purple-500 text-white font-bold py-4 px-12 rounded-lg text-xl transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-xl"
+          >
+            Start a 3D Print
+          </Link>
+        </div>
+
+        {/* Find a Model to Print */}
+        <div className="max-w-4xl mx-auto mb-12">
+          <h2 className="text-3xl font-bold text-white text-center mb-8">
+            Find a Model to Print
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {/* Thingiverse */}
+            <a
+              href="https://www.thingiverse.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-4 hover:bg-white/20 transition-all duration-300 hover:scale-105 text-center"
+            >
+              <div className="text-2xl mb-2">🌐</div>
+              <div className="text-xl font-semibold text-white">Thingiverse</div>
+              <div className="text-white/70 text-sm">Mostly free community models</div>
+            </a>
+
+            {/* MyMiniFactory */}
+            <a
+              href="https://www.myminifactory.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-4 hover:bg-white/20 transition-all duration-300 hover:scale-105 text-center"
+            >
+              <div className="text-2xl mb-2">🏭</div>
+              <div className="text-xl font-semibold text-white">MyMiniFactory</div>
+              <div className="text-white/70 text-sm">Free & paid tabletop & cosplay</div>
+            </a>
+
+            {/* Cults3D */}
+            <a
+              href="https://cults3d.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-4 hover:bg-white/20 transition-all duration-300 hover:scale-105 text-center"
+            >
+              <div className="text-2xl mb-2">🎨</div>
+              <div className="text-xl font-semibold text-white">Cults3D</div>
+              <div className="text-white/70 text-sm">Free & premium marketplace</div>
+            </a>
+
+            {/* CGTrader */}
+            <a
+              href="https://www.cgtrader.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-4 hover:bg-white/20 transition-all duration-300 hover:scale-105 text-center"
+            >
+              <div className="text-2xl mb-2">💼</div>
+              <div className="text-xl font-semibold text-white">CGTrader</div>
+              <div className="text-white/70 text-sm">Professional models & formats</div>
+            </a>
+
+            {/* Sketchfab */}
+            <a
+              href="https://sketchfab.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-4 hover:bg-white/20 transition-all duration-300 hover:scale-105 text-center"
+            >
+              <div className="text-2xl mb-2">👁️</div>
+              <div className="text-xl font-semibold text-white">Sketchfab</div>
+              <div className="text-white/70 text-sm">3D viewer & store</div>
+            </a>
+
+            {/* Pinshape */}
+            <a
+              href="https://pinshape.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-4 hover:bg-white/20 transition-all duration-300 hover:scale-105 text-center"
+            >
+              <div className="text-2xl mb-2">📌</div>
+              <div className="text-xl font-semibold text-white">Pinshape</div>
+              <div className="text-white/70 text-sm">Community marketplace</div>
+            </a>
+
+            {/* Thangs */}
+            <a
+              href="https://thangs.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-4 hover:bg-white/20 transition-all duration-300 hover:scale-105 text-center"
+            >
+              <div className="text-2xl mb-2">🔍</div>
+              <div className="text-xl font-semibold text-white">Thangs</div>
+              <div className="text-white/70 text-sm">Geometric search & CAD</div>
+            </a>
+
+            {/* Printables */}
+            <a
+              href="https://www.printables.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-4 hover:bg-white/20 transition-all duration-300 hover:scale-105 text-center"
+            >
+              <div className="text-2xl mb-2">🖨️</div>
+              <div className="text-xl font-semibold text-white">Printables</div>
+              <div className="text-white/70 text-sm">Prusa's validated prints</div>
+            </a>
+
+            {/* GrabCAD */}
+            <a
+              href="https://grabcad.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-4 hover:bg-white/20 transition-all duration-300 hover:scale-105 text-center"
+            >
+              <div className="text-2xl mb-2">⚙️</div>
+              <div className="text-xl font-semibold text-white">GrabCAD</div>
+              <div className="text-white/70 text-sm">Engineering CAD models</div>
+            </a>
+
+            {/* Shapeways */}
+            <a
+              href="https://www.shapeways.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-4 hover:bg-white/20 transition-all duration-300 hover:scale-105 text-center"
+            >
+              <div className="text-2xl mb-2">🏪</div>
+              <div className="text-xl font-semibold text-white">Shapeways</div>
+              <div className="text-white/70 text-sm">Paid marketplace & printing</div>
+            </a>
+
+            {/* Etsy */}
+            <a
+              href="https://www.etsy.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg p-4 hover:bg-white/20 transition-all duration-300 hover:scale-105 text-center"
+            >
+              <div className="text-2xl mb-2">🛍️</div>
+              <div className="text-xl font-semibold text-white">Etsy</div>
+              <div className="text-white/70 text-sm">Independent designer STLs</div>
+            </a>
+          </div>
+        </div>
+
         {/* Project Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-          {/* Sample 3D Printing Project */}
-          <div className="bg-white/10 backdrop-blur-sm rounded-lg border border-white/20 p-6 hover:bg-white/20 transition-all duration-300">
-            <div className="w-full h-48 bg-gradient-to-br from-pink-500/20 to-purple-500/20 rounded-lg mb-4 flex items-center justify-center">
-              <div className="text-6xl">🖨️</div>
-            </div>
-            <h3 className="text-xl font-semibold text-white mb-2">Sample 3D Print</h3>
-            <p className="text-white/70 mb-4">
-              A custom 3D printed object created using CAD designs and additive manufacturing.
-            </p>
-            <div className="flex gap-2">
-              <span className="px-3 py-1 bg-pink-500/20 text-pink-300 rounded-full text-sm">PLA</span>
-              <span className="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-sm">FDM</span>
-            </div>
-          </div>
-
-          {/* Add more 3D printing projects here */}
+          {/* Add 3D printing projects here */}
         </div>
       </div>
 
